@@ -134,7 +134,6 @@ locals {
     },
     {
       category = "terraform"
-      hcl      = true
       key      = "vpc_id"
       value    = data.terraform_remote_state.network.outputs.vpc_id
 
@@ -169,7 +168,6 @@ locals {
     }
   ]
 }
-
 
 
      "fem-eci-product-service-prod" = {
