@@ -7,3 +7,15 @@
 data "tfe_github_app_installation" "this" {
   installation_id = var.github_app_installation_id
 }
+
+
+data "terraform_remote_state" "network" {
+  backend = "remote"
+
+  config = {
+    organization = "tanvir-rifat"
+    workspaces = {
+      name = "fem-eci-aws-network2"
+    }
+  }
+}
