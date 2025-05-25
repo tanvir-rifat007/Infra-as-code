@@ -9,13 +9,8 @@ data "tfe_github_app_installation" "this" {
 }
 
 
-data "terraform_remote_state" "network" {
-  backend = "remote"
 
-  config = {
-    organization = "tanvir-rifat"
-    workspaces = {
-      name = "fem-eci-aws-network2"
-    }
-  }
+
+data "tfe_outputs" "network" {
+  workspace = "fem-eci-aws-network2"
 }

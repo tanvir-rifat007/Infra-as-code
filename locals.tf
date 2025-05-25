@@ -136,19 +136,19 @@ locals {
       category = "terraform"
       hcl      = true
       key      = "vpc_id"
-      value    =  data.terraform_remote_state.network.outputs.vpc_id
+      value    =  tfe_outputs.network.vpc_id
     },
     {
       category = "terraform"
       hcl      = true
       key      = "subnets"
-      value    = [data.terraform_remote_state.network.outputs.private_subnets]
+      value    = [tfe_outputs.network.private_subnets]
     },
     {
       category = "terraform"
       hcl      = true
       key      = "security_groups"
-      value    = [data.terraform_remote_state.network.outputs.private_security_group]
+      value    = [tfe_outputs.network.private_security_group]
     },
     {
       category = "terraform"
