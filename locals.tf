@@ -116,11 +116,15 @@ locals {
     }
 
 
-    "fem-eci-aws-cluster-prod2" = {
+
+     
+"fem-eci-aws-cluster-prod2" = {
   description         = "Automation for AWS cluster resources2."
   execution_mode      = "remote"
   project_id          = module.project["fem-eci-project"].id
   vcs_repo_identifier = "${var.github_organization_name}/Infra-as-code-aws-cluster2"
+
+  depends_on = ["fem-eci-aws-network2"]
 
   variables = [
     {
@@ -130,6 +134,7 @@ locals {
     },
     {
       category = "terraform"
+      hcl      = true
       key      = "vpc_id"
       value    = "tfe_outputs.fem-eci-aws-network2.vpc_id"
     },
