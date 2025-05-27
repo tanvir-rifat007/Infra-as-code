@@ -79,7 +79,7 @@ locals {
       category = "terraform"
       hcl      = true
       key      = "bastion_ingress"
-      value    = jsonencode(["103.216.57.190/16"]) 
+      value    = jsonencode(["103.216.57.190/32"]) 
     }
   ]
 }
@@ -112,7 +112,7 @@ locals {
       category = "terraform"
       hcl      = true
       key      = "bastion_ingress"
-      value    = jsonencode(["103.216.57.190/16"]) 
+      value    = jsonencode(["103.216.57.190/32"]) 
     }
   ]
 }
@@ -164,6 +164,59 @@ locals {
       category = "terraform"
       key      = "name"
       value    = "fem-eci-tanvirrifat2"
+    },
+    {
+      category = "terraform"
+      key      = "vpc_id"
+      value    = data.terraform_remote_state.network.outputs.vpc_id
+
+    },
+    {
+      category = "terraform"
+      hcl      = true
+      key      = "subnets"
+      value    = jsonencode(data.terraform_remote_state.network.outputs.private_subnets)
+
+    },
+    {
+      category = "terraform"
+      hcl      = true
+      key      = "security_groups"
+      value    = "[data.terraform_remote_state.network.outputs.private_security_group]"
+    },
+    {
+      category = "terraform"
+      hcl      = true
+      key      = "capacity_providers"
+      value    = jsonencode({
+        on_demand = {
+          instance_type = "t3.medium"
+          market_type   = "on-demand"
+        }
+        spot = {
+          instance_type = "t3.medium"
+          market_type   = "spot"
+        }
+      })
+    }
+  ]
+}
+
+
+
+"fem-fd-service-cluster" = {
+  description         = "Automation for AWS cluster resources"
+  execution_mode      = "remote"
+  project_id          = module.project["fem-eci-project"].id
+  vcs_repo_identifier = "${var.github_organization_name}/fem-fd-service-cluster"
+
+  depends_on = ["fem-fd-service-network"]
+
+  variables = [
+    {
+      category = "terraform"
+      key      = "name"
+      value    = "fem-fd-service"
     },
     {
       category = "terraform"

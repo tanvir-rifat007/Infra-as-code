@@ -15,7 +15,7 @@ data "terraform_remote_state" "network" {
   config = {
     organization = "tanvir-rifat"
     workspaces = {
-      name = "fem-eci-aws-network2"
+      name = "fem-fd-service-network"
     }
   }
 }
