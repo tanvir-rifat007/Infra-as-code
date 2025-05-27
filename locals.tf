@@ -106,7 +106,8 @@ locals {
     {
       category = "terraform"
       key      = "name"
-      value    = "fem-eci2"
+      value    = "fem-fd-service-network"
+
     },
     {
       category = "terraform"
