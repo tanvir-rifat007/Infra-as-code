@@ -236,6 +236,7 @@ locals {
       hcl      = true
       key      = "security_groups"
       value    = [jsonencode(data.terraform_remote_state.network.outputs.private_security_group)]
+
     },
     {
       category = "terraform"
