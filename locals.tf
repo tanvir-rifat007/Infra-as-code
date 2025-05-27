@@ -85,6 +85,39 @@ locals {
 }
 
 
+    "fem-fd-service-network" = {
+  description         = "Automation for AWS network resources2."
+  execution_mode      = "remote"
+  project_id          = module.project["fem-eci-project"].id
+  vcs_repo_identifier = "${var.github_organization_name}/fem-fd-service-network"
+
+  variables = [
+    {
+      category = "terraform"
+      hcl      = true
+      key      = "availability_zones"
+      value    = jsonencode(["us-west-2a", "us-west-2b"])
+    },
+    {
+      category = "terraform"
+      key      = "cidr"
+      value    = "10.0.0.0/16"
+    },
+    {
+      category = "terraform"
+      key      = "name"
+      value    = "fem-eci2"
+    },
+    {
+      category = "terraform"
+      hcl      = true
+      key      = "bastion_ingress"
+      value    = jsonencode(["103.216.57.190/16"]) 
+    }
+  ]
+}
+
+
     "fem-eci-aws-cluster-prod" = {
       description         = "Automation for AWS cluster resources."
       execution_mode      = "remote"
@@ -134,7 +167,6 @@ locals {
     },
     {
       category = "terraform"
-      hcl      = true
       key      = "vpc_id"
       value    = data.terraform_remote_state.network.outputs.vpc_id
 
@@ -150,7 +182,7 @@ locals {
       category = "terraform"
       hcl      = true
       key      = "security_groups"
-      value    = jsonencode(data.terraform_remote_state.network.outputs.private_security_group)
+      value    = "[data.terraform_remote_state.network.outputs.private_security_group]"
     },
     {
       category = "terraform"
