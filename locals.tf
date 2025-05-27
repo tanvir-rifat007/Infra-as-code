@@ -257,6 +257,42 @@ locals {
 }
 
 
+"fem-fd-service-db2" = {
+  description         = "Automation for the fem-fd-service-db Postgres RDS."
+  execution_mode      = "remote"
+  project_id          = module.project["fem-eci-project"].id
+  vcs_repo_identifier = "${var.github_organization_name}/fem-fd-service-db"
+
+  depends_on = ["fem-fd-service-network"]
+
+  variables = [
+    {
+      category = "terraform"
+      key      = "name"
+      value    = "fem-fd-service-db2"
+    },
+    {
+      category = "terraform"
+      key      = "vpc_name"
+      value    = data.terraform_remote_state.network.outputs.vpc_name
+    },
+    {
+      category = "terraform"
+      hcl      = true
+      key      = "subnets"
+      value    = jsonencode(data.terraform_remote_state.network.outputs.private_subnets)
+    },
+    {
+      category = "terraform"
+      hcl      = true
+      key      = "security_groups"
+      value    = jsonencode(data.terraform_remote_state.network.outputs.private_security_group)
+    }
+  ]
+}
+
+
+
 
      "fem-eci-product-service-prod" = {
       description         = "Automation for product service resources."
