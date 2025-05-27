@@ -204,11 +204,11 @@ locals {
 
 
 
-"fem-fd-service-cluster" = {
+"fem-fd-service-cluster2" = {
   description         = "Automation for AWS cluster resources"
   execution_mode      = "remote"
   project_id          = module.project["fem-eci-project"].id
-  vcs_repo_identifier = "${var.github_organization_name}/fem-fd-service-cluster"
+  vcs_repo_identifier = "${var.github_organization_name}/fem-fd-service-cluster2"
 
   depends_on = ["fem-fd-service-network"]
 
@@ -216,7 +216,7 @@ locals {
     {
       category = "terraform"
       key      = "name"
-      value    = "fem-fd-service"
+      value    = "fem-fd-service-cluster2"
     },
     {
       category = "terraform"
@@ -235,7 +235,8 @@ locals {
       category = "terraform"
       hcl      = true
       key      = "security_groups"
-      value    = "[data.terraform_remote_state.network.outputs.private_security_group]"
+      value    = jsonencode(data.terraform_remote_state.network.outputs.private_security_group)
+
     },
     {
       category = "terraform"
