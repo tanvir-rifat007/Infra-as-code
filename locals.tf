@@ -216,7 +216,7 @@ locals {
     {
       category = "terraform"
       key      = "name"
-      value    = "fem-fd-service"
+      value    = "fem-fd-service-cluster"
     },
     {
       category = "terraform"
