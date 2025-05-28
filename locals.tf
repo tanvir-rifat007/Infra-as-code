@@ -314,6 +314,82 @@ locals {
       ]
     }
 
+
+    "fem-fd-service-product-service" = {
+      description         = "Automation for product service resources."
+      execution_mode      = "remote"
+      project_id          = module.project["fem-eci-project"].id
+      vcs_repo_identifier = "${var.github_organization_name}/fem-fd-service-product-service"
+
+      variables = [
+        {
+          category = "terraform"
+          key      = "cluster_name"
+          value    = "fem-fd-service-cluster2"
+        },
+        {
+          category = "terraform"
+          key      = "name"
+          value    = "product-service"
+        },
+        {
+          category = "terraform"
+          key      = "capacity_provider"
+          value    = "on_demand"
+        },
+        {
+          category = "terraform"
+          key      = "cluster_id"
+          hcl      = true
+          value    = jsonencode(data.terraform_remote_state.cluster.outputs.cluster_arn)
+        },
+        {
+          category = "terraform"
+          key      = "listener_arn"
+          value    = jsonencode(data.terraform_remote_state.cluster.outputs.listener_arn)
+        },
+        {
+          category = "terraform"
+          key      = "vpc_id"
+          value    = jsonencode(data.terraform_remote_state.network.outputs.vpc_id)
+        },
+        {
+          category = "terraform"
+          key      = "port"
+          value    = "8080"
+        },
+        {
+          category = "terraform"
+          key      = "paths"
+          value    = jsonencode(["/*"])
+          hcl      = true
+        },
+        {
+          category = "terraform"
+          key      = "config"
+          value    = jsonencode({
+            GOOGLE_REDIRECT_URL = "https://d11krv93sm9qnr.cloudfront.net/auth/google/callback"
+    GOOSE_DRIVER        = "postgres"
+
+          })
+          hcl = true
+        },
+        {
+          category = "terraform"
+          key      = "secrets"
+          value    = jsonencode(["GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET",
+    "GOOSE_DBSTRING",
+    "POSTGRES_URL",
+])
+          hcl      = true
+        }
+      ]
+    }
+
+
+
+   
     
   }
 }

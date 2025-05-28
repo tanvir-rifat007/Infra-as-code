@@ -19,3 +19,16 @@ data "terraform_remote_state" "network" {
     }
   }
 }
+
+
+data "terraform_remote_state" "cluster" {
+  backend = "remote"
+
+  config = {
+    organization = "tanvir-rifat"
+    workspaces = {
+      name = "fem-fd-service-cluster2"
+    }
+  }
+}
+
